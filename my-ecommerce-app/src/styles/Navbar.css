@@ -1,0 +1,38 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  color: #333;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav .search-form {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+}
+
+nav .search-form input {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 10px;
+  flex: 1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a,
+.nav-links button {
+  color: #333;
+  margin: 0 10px;
+}
+
+.nav-links a:hover,
+.nav-links button:hover {
+  text-decoration: underline;
+}
