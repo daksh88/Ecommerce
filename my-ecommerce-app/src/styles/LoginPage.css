@@ -185,3 +185,15 @@
   height: 100px;
   animation: LoginPage-ghostMovement 3s ease-in-out infinite;
 }
+
+@media (max-width: 768px) {
+  .login-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  .login-form input {
+    padding: 10px;
+  }
+}

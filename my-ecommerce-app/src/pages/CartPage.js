@@ -3,47 +3,71 @@ import { useCart } from '../context/CartContext';
 import '../styles/CartPage.css';
 
 const CartPage = () => {
-  const { cart, removeFromCart } = useCart();
-
-  // Calculate total price
-  const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-
-  // Function to format numbers to INR currency
-  const formatToINR = (amount) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-    }).format(amount);
-  };
+  const { cart, removeFromCart, updateQuantity, cartTotal } = useCart();
 
   return (
-    <div className="cart-container">
-      <h1>Your Cart</h1>
+    <div className="cart-page">
+      <h2>Shopping Cart</h2>
       {cart.length === 0 ? (
-        <p className="cart-empty">Your cart is empty!</p>
+        <p className="empty-cart">Your cart is empty</p>
       ) : (
         <>
-          <ul>
-            {cart.map((item) => (
-              <li key={item.id} className="cart-item">
+          <div className="cart-items">
+            {cart.map(item => (
+              <div key={item.id} className="cart-item">
                 <img src={item.image} alt={item.name} />
-                <div className="cart-item-details">
-                  <p>{item.name}</p>
-                  <p className="cart-item-price">Price: {formatToINR(item.price)}</p>
-                  <p className="cart-item-quantity">Quantity: {item.quantity}</p>
-                  <p className="cart-item-total">Total: {formatToINR(item.price * item.quantity)}</p>
+                <div className="item-details">
+                  <h3>{item.name}</h3>
+                  <p className="item-price">₹{item.price.toLocaleString()}</p>
+                  <div className="quantity-controls">
+                    <button 
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      className="quantity-btn"
+                      disabled={item.quantity <= 1}
+                    >
+                      -
+                    </button>
+                    <span className="quantity">{item.quantity}</span>
+                    <button 
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      className="quantity-btn"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-                <div className="cart-actions">
-                  <button onClick={() => removeFromCart(item.id)}>Remove</button>
+                <div className="item-total">
+                  <p>₹{(item.price * item.quantity).toLocaleString()}</p>
+                  <button 
+                    onClick={() => removeFromCart(item.id)}
+                    className="remove-btn"
+                  >
+                    <i className="fas fa-trash"></i>
+                  </button>
                 </div>
-              </li>
+              </div>
             ))}
-          </ul>
-
-          {/* Checkout Section */}
-          <div className="checkout-section">
-            <p className="total-price">Total Bill: {formatToINR(totalPrice)}</p>
-            <button className="checkout-button">Place Order</button>
+          </div>
+          
+          <div className="cart-summary">
+            <h3>Cart Summary</h3>
+            <div className="summary-details">
+              <div className="summary-row">
+                <span>Subtotal:</span>
+                <span>₹{cartTotal.toLocaleString()}</span>
+              </div>
+              <div className="summary-row">
+                <span>Shipping:</span>
+                <span>Free</span>
+              </div>
+              <div className="summary-row total">
+                <span>Total:</span>
+                <span>₹{cartTotal.toLocaleString()}</span>
+              </div>
+            </div>
+            <button className="checkout-btn">
+              Proceed to Checkout
+            </button>
           </div>
         </>
       )}

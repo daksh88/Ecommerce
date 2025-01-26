@@ -23,23 +23,26 @@ const Navbar = () => {
   const isAuthenticated = localStorage.getItem('token');
 
   return (
-    <nav className="minimal-navbar">
+    <nav className="navbar">
+      <Link to="/" className="nav-link">Home</Link>
       <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search products..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <button type="submit">🔍</button>
       </form>
       <div className="nav-links">
-        <Link to="/">Home</Link>
-        <Link to="/cart">Cart ({cart.length})</Link>
+        <Link to="/cart" className="nav-link cart-link">
+          <i className="fas fa-shopping-cart"></i>
+          <span className="cart-count">{cart.length}</span>
+        </Link>
         {isAuthenticated ? (
           <button onClick={handleLogout}>Logout</button>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to="/login" className="nav-link">Login</Link>
         )}
       </div>
     </nav>

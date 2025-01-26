@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import CartPage from './pages/CartPage';
+import './styles/Navbar.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
@@ -51,27 +52,29 @@ function App() {
   return (
     <CartProvider>
       <Router>
-        {isLoggedIn && <Navbar onLogout={handleLogout} />}
-        <Routes>
-          <Route
-            path="/"
-            element={isLoggedIn ? <HomePage /> : <Navigate to="/login" replace />}
-          />
-          <Route
-            path="/login"
-            element={!isLoggedIn ? <LoginPage setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/" replace />}
-          />
-          <Route
-            path="/signup"
-            element={!isLoggedIn ? <SignupPage /> : <Navigate to="/" replace />}
-          />
-          <Route
-            path="/cart"
-            element={isLoggedIn ? <CartPage /> : <Navigate to="/login" replace />}
-          />
-          <Route path="/E-Commerce" element={<Navigate to="/" replace />} />
-          <Route path="/E-Commerce" element={<Navigate to="/" replace />} />
-        </Routes>
+        <div className="app">
+          {isLoggedIn && <Navbar onLogout={handleLogout} />}
+          <Routes>
+            <Route
+              path="/"
+              element={isLoggedIn ? <HomePage /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/login"
+              element={!isLoggedIn ? <LoginPage setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/" replace />}
+            />
+            <Route
+              path="/signup"
+              element={!isLoggedIn ? <SignupPage /> : <Navigate to="/" replace />}
+            />
+            <Route
+              path="/cart"
+              element={isLoggedIn ? <CartPage /> : <Navigate to="/login" replace />}
+            />
+            <Route path="/Ecommerce" element={<Navigate to="/login" replace />} />
+            <Route path="/E-Commerce" element={<Navigate to="/" replace />} />
+          </Routes>
+        </div>
       </Router>
     </CartProvider>
   );
